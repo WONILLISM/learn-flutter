@@ -1,146 +1,90 @@
 import 'package:flutter/material.dart';
-import 'package:webtoonnomard/widgets/button.dart';
-import 'package:webtoonnomard/widgets/currency_card.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class App extends StatefulWidget {
+  const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  bool showTitle = true;
+
+  void toggleTitle() {
+    setState(() {
+      showTitle = !showTitle;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        backgroundColor: const Color(0xFF181818),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 50,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        const Text(
-                          "hi",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 38,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        Text(
-                          "Welcome back",
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.5),
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 70,
-                ),
-                Text(
-                  'Total Balance',
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
-                    fontSize: 22,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  '\$ 5 194 482',
-                  style: TextStyle(
-                      color: Colors.white.withOpacity(0.8),
-                      fontSize: 44,
-                      fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Button(
-                      text: 'Transfer',
-                      bgColor: Color(0xFFF1B33B),
-                      textColor: Colors.black,
-                    ),
-                    Button(
-                      text: 'Request',
-                      bgColor: Color(0xFF1F2123),
-                      textColor: Colors.white,
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 80,
-                ),
-                Row(
-                  // crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Wallets',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 36,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      'View All',
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const CurrencyCard(
-                  name: 'Euro',
-                  code: 'EUR',
-                  amount: '6 428',
-                  icon: Icons.euro_sharp,
-                  isInverted: false,
-                  order: 1,
-                ),
-                const CurrencyCard(
-                  name: 'Bitcoin',
-                  code: 'BTC',
-                  amount: '5',
-                  icon: Icons.currency_bitcoin_sharp,
-                  isInverted: true,
-                  order: 2,
-                ),
-                const CurrencyCard(
-                  name: 'Dollar',
-                  code: 'USD',
-                  amount: '6 112',
-                  icon: Icons.attach_money_sharp,
-                  isInverted: false,
-                  order: 3,
-                )
-              ],
-            ),
+      theme: ThemeData(
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.red,
           ),
         ),
+      ),
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              showTitle ? const Title() : const Text("nothing"),
+              IconButton(
+                onPressed: toggleTitle,
+                icon: const Icon(Icons.remove_red_eye),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Title extends StatefulWidget {
+  const Title({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<Title> createState() => _TitleState();
+}
+
+class _TitleState extends State<Title> {
+  int count = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    print("init state!");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print("dispose!");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("build!");
+
+    return Text(
+      'Title',
+      style: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: Theme.of(context).textTheme.titleLarge?.color,
       ),
     );
   }
